@@ -72,14 +72,18 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm(ruleFormRef)">
+        <el-button type="primary" native-type="submit" @click="submitForm(ruleFormRef)">
           Register
         </el-button>
+        <div class="signup">
+          <span>Already have an account ?</span>
+        <el-link type="primary" href="/login" style="font-weight: bold;"> Login now.</el-link>
+        </div>
       </el-form-item>
     </el-form>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .content_container {
   width: 525px;
   /* height: 500px; */
@@ -90,7 +94,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   box-shadow: 3px 2px 77px 16px rgba(0, 0, 0, 0.83);
   -webkit-box-shadow: 3px 2px 77px 16px rgba(0, 0, 0, 0.83);
   -moz-box-shadow: 3px 2px 77px 16px rgba(0, 0, 0, 0.83);
-  background: #ececec4d;
+  background-color:  #ffffff;
 
   .form_title {
     font-size: 28px;
@@ -107,6 +111,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   .text_field {
     font-weight: bold;
     color: #000;
+  }
+  .signup{
+    margin-left: 20px;
+    span {
+      margin-right: 10px;
+    }
   }
 }
 </style>

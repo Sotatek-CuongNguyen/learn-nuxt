@@ -16,15 +16,18 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (token.value) {
     if (PUBLIC_PAGES.includes(to.path)) {
       return navigateTo("/home");
+    }else if(!identity.user){
+      const check = profile.user;
+      console.log("CHECK", check)
+      if (!check) {
+        token.value = null;
+        return navigateTo("/login");
+      }
+      identity.setCredentials({ token: token.value, user: check  });
     }
-      // if (!check) {
-      //   token.value = null;
-      //   return navigateTo("/login");
-      // }
-     identity.setCredentials({ token: token, user: profile.user  });
 
   } else if (!PUBLIC_PAGES.includes(to.path)) {
-    console.log("GO TO HERE")
+    console.log("NO TOKEN")
     return navigateTo("/login");
   }
 });

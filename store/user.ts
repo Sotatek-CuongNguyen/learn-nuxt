@@ -14,10 +14,14 @@ export const useProfile = defineStore("profile", {
       this.loading = true;
       await getProfile()
         .then((res: any) => {
+          this.loading = false;
+          console.log("PROFILE", res.data)
           this.user = res.data;
+          return res.data
         })
         .catch((err: any) => {
           console.log("err", err);
+          this.loading = false;
         });
     },
     async resetState(){
@@ -25,7 +29,7 @@ export const useProfile = defineStore("profile", {
     }
   },
   persist: {
-    storage: persistedState.sessionStorage,
+    storage: persistedState.localStorage,
     paths: ['user']
   },
 });

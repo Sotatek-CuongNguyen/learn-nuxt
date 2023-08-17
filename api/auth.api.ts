@@ -7,3 +7,6 @@ export const postRegister = (payload: any) => {
 export const postLogout = () => {
   return useNuxtApp().$api.put("/auth/logout");
 }
+export const postChangePassword = (payload:any) => {
+  return useNuxtApp().$api.put("/change-password", payload);
+}

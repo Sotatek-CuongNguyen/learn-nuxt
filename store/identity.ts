@@ -20,5 +20,7 @@ export const useIdentity = defineStore("identity", {
       this.user = null;
     },
   },
-  persist: true
+  persist: {
+    storage: persistedState.localStorage,
+  },
 });

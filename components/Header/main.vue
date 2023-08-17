@@ -6,9 +6,10 @@ import {
   SwitchButton
 
 } from '@element-plus/icons-vue'
+
 import { useAuth } from '~/store/auth';
 import { useProfile } from '~/store/user';
- const Menu = [
+const Menu = [
   {
     label: "My Profile",
     action: "my_profile",
@@ -24,15 +25,27 @@ import { useProfile } from '~/store/user';
     action: "logout",
     icon: SwitchButton
   }
- ]
+]
 const auth = useAuth()
- const handleAction = (action:any) =>{
+
+const dialogVisible = ref<boolean>(false)
+const handleAction = (action: any) => {
   console.log("ACTION", action)
-   if(action === 'logout'){
-      auth.logout()
-   }
- }
- const user = useProfile()
+  if (action === 'logout') {
+    auth.logout()
+  }
+  if (action === 'change_password') {
+    dialogVisible.value = true
+  }
+}
+const user = useProfile()
+const handleCancel = () => {
+  dialogVisible.value = false
+}
+console.log("CHECK VALUE", dialogVisible.value)
+watch(dialogVisible,()=>{
+  console.log("dialogVisible",dialogVisible.value)
+})
 </script>
 <template>
   <el-header class="header">
@@ -45,17 +58,20 @@ const auth = useAuth()
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-for="item in Menu" :icon="item.icon" @click="handleAction(item.action)">{{ item.label }}</el-dropdown-item>
+            <el-dropdown-item v-for="item in Menu" :icon="item.icon" @click="handleAction(item.action)">{{ item.label
+            }}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
   </el-header>
+  <auth-modal-change-password :open="dialogVisible" @cancel="handleCancel" />
 </template>
 <style lang="scss" scoped>
 .header {
   padding: 0;
   display: flex;
+
   &_left {
     width: 300px;
     background-color: #000;
@@ -70,7 +86,12 @@ const auth = useAuth()
     align-items: center;
   }
 }
-.el-dropdown-link{
+
+.text_field {
+  width: 100%;
+}
+
+.el-dropdown-link {
   font-weight: bold;
   font-size: 14px;
   display: flex;

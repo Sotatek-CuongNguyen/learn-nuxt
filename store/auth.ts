@@ -1,4 +1,9 @@
-import { postLogin, postRegister, postLogout } from "~/api/auth.api";
+import {
+  postLogin,
+  postRegister,
+  postLogout,
+  postChangePassword,
+} from "~/api/auth.api";
 import { defineStore } from "pinia";
 import { getProfile } from "~/api/user.api";
 import { useProfile } from "~/store/user";
@@ -9,19 +14,19 @@ const BAD_REQUEST_STATUS = 400;
 export const useAuth = defineStore("auth", {
   state: (): any => ({
     loading: false,
-    token: null
+    token: null,
   }),
   actions: {
     async login(payload: any) {
       this.loading = true;
       const router = useRouter();
       const user = useProfile();
-      const token = useCookie('token')
+      const token = useCookie("token");
       const res: any = await postLogin(payload)
         .then(async (res: any) => {
           if (res?.access_token) {
             this.token = res?.access_token;
-            token.value =  res?.access_token
+            token.value = res?.access_token;
             showMessage("success", "SUCCESS");
             setTimeout(() => {
               router.push("/home");
@@ -59,24 +64,36 @@ export const useAuth = defineStore("auth", {
       const user = useProfile();
       await postLogout()
         .then((res: any) => {
-          const token = useCookie('token')
-          if(res.success){
-            console.log("GO HERE")
+          const token = useCookie("token");
+          if (res.success) {
+            const router = useRouter();
+            console.log("GO HERE");
             identity.removeCredentials();
             user.resetState();
-            token.value = null
-            clearCookies()
-            sessionStorage.clear()
-            localStorage.clear()
+            token.value = null;
+            clearCookies();
+            sessionStorage.clear();
+            localStorage.clear();
+            router.push("/login");
           }
         })
         .catch((err: any) => {
-          console.log("ERR", err);
+          showMessage('error', err.data?.message)
         });
+    },
+    async changePassword(payload: any) {
+      try {
+        const res: any = await postChangePassword(payload);
+        if (res.success) {
+          return res.data;
+        }
+      } catch (err: any) {
+        showMessage('error', err.data?.message)
+      }
     },
   },
   persist: {
     storage: persistedState.cookies,
-    paths: ['token']
+    paths: ["token"],
   },
 });

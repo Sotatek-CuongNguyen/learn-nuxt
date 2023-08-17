@@ -46,7 +46,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   <div class="content_container">
     <p class="form_title">Login</p>
     <el-form label-position="top" label-width="100px" ref="ruleFormRef" :rules="rules" :model="ruleForm"
-      style="max-width: 460px">
+      style="max-width: 460px" >
       <el-form-item label="Email" required class="text_field">
         <el-input v-model="ruleForm.username" />
       </el-form-item>
@@ -66,12 +66,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     </el-form>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .content_container {
   width: 525px;
   /* height: 500px; */
   margin: auto;
   /* border: 1px solid black; */
+  background-color:  #ffffff;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 3px 2px 77px 16px rgba(0, 0, 0, 0.83);
