@@ -9,6 +9,7 @@ import {
 
 import { useAuth } from '~/store/auth';
 import { useProfile } from '~/store/user';
+const router = useRouter()
 const Menu = [
   {
     label: "My Profile",
@@ -36,6 +37,9 @@ const handleAction = (action: any) => {
   }
   if (action === 'change_password') {
     dialogVisible.value = true
+  }
+  if(action === 'my_profile'){
+    router.push('/profile')
   }
 }
 const user = useProfile()

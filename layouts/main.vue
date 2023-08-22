@@ -6,8 +6,12 @@
       </el-header> -->
       <header-main />
       <el-container class="container">
-        <el-aside width="300px" class="left_side">Aside</el-aside>
-        <el-main class="right_side">Main</el-main>
+        <el-aside width="300px" class="left_side">
+          <side-bar />
+        </el-aside>
+        <el-main class="right_side">
+          <slot />
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -23,8 +27,7 @@
   height: calc(100vh - 60px);
 
   .left_side {
-    background: rgb(2, 0, 36);
-    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgba(13, 255, 77, 0.6587009803921569) 0%, rgba(0, 212, 255, 1) 94%);
+    background-image: linear-gradient(to bottom, #051937, #004c7f, #0085a5, #00bf90, #10f240);
     height: 100%;
   }
 
